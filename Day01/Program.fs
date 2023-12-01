@@ -17,15 +17,15 @@ let wrodToNumeral message =
 let parseMessage message =
     let msg = ""
 
-    let rec messageInternal message msg =
+    let rec aux message msg =
         let firstChar = String.tryHead message
         let messageNew = message.[1..]
 
         match firstChar with
-        | Some c -> string msg + string c |> wrodToNumeral |> messageInternal messageNew
+        | Some c -> string msg + string c |> wrodToNumeral |> aux messageNew
         | None -> msg
 
-    messageInternal message msg
+    aux message msg
 
 let loadFile filePath = File.ReadAllLines(filePath)
 
@@ -63,7 +63,6 @@ let main _ =
 
     let part2ExampleAns = part2 @"./data/part2Example.txt"
     assert (part2ExampleAns = 281)
-
     let part2Ans = part2 @"./data/input.txt"
     printfn "Answer for part 2 is %i" part2Ans
     0
